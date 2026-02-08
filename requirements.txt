@@ -1,0 +1,12 @@
+tensorflow==2.10.1
+numpy==1.26.4
+matplotlib==3.8.4
+pillow==10.3.0
+tqdm==4.66.4
+absl-py==2.1.0
+opencv-python==4.9.0.80 
+scikit-learn==1.4.2 
+seaborn==0.13.2 
+pandas==2.2.2 
+nltk==3.9.1
+contractions==0.1.73

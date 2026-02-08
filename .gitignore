@@ -1,0 +1,54 @@
+# ======================
+# Data & Artifacts
+# ======================
+data/
+artifacts/
+logs/
+runs/
+checkpoints/
+
+# ======================
+# Python
+# ======================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# ======================
+# Virtual Environments
+# ======================
+env/
+venv/
+.venv/
+project-1/
+
+# ======================
+# Jupyter
+# ======================
+.ipynb_checkpoints/
+
+# ======================
+# ML / TensorFlow
+# ======================
+*.h5
+*.ckpt
+*.index
+*.data-*
+*.pb
+saved_model/
+
+# ======================
+# OS / Editor
+# ======================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ======================
+# Logs & Temp
+# ======================
+*.log
+*.tmp
+
