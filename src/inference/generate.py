@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from src.inference.image_utils import read_image_inf
 
 
-def generate_caption(image_path: str, caption_model, tokenizer, seq_length: int, show_image: bool = False) -> str:
+def generate_caption(image_path: str, caption_model, tokenizer, seq_length: int, image_size, show_image: bool = False) -> str:
     """
     Generate a caption for a given image using a trained captioning model.
 
@@ -30,7 +30,7 @@ def generate_caption(image_path: str, caption_model, tokenizer, seq_length: int,
     index_to_word = dict(enumerate(vocab))
     max_len = seq_length - 1
 
-    image = read_image_inf(image_path)
+    image = read_image_inf(image_path, image_size)
 
     if show_image:
         img = tf.image.decode_jpeg(tf.io.read_file(image_path), channels=3)

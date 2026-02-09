@@ -2,9 +2,7 @@
 
 import tensorflow as tf
 
-IMAGE_SIZE = (299, 299)
-
-def read_image_inf(image_path: str) -> tf.Tensor:
+def read_image_inf(image_path: str, image_size=(299, 299)) -> tf.Tensor:
     """
     Load and preprocess an image for inference.
 
@@ -24,6 +22,6 @@ def read_image_inf(image_path: str) -> tf.Tensor:
     """
     img = tf.io.read_file(image_path)
     img = tf.image.decode_jpeg(img, channels=3)
-    img = tf.image.resize(img, IMAGE_SIZE)
+    img = tf.image.resize(img, image_size)
     img = tf.image.convert_image_dtype(img, tf.float32)
     return tf.expand_dims(img, axis=0)

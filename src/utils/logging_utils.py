@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 
 
-def setup_logger(name: str = "project-1-visual_intelligence", log_dir: str = "logs", level: int = logging.INFO):
+def setup_logger(log_name:str = "training", name: str = "project-1-visual_intelligence", log_dir: str = "logs", level: int = logging.INFO):
     """
     Set up logging to console + file.
 
@@ -30,7 +30,7 @@ def setup_logger(name: str = "project-1-visual_intelligence", log_dir: str = "lo
     console_handler.setFormatter(formatter)
 
     # File handler
-    log_file = os.path.join(log_dir,f"train_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log")
+    log_file = os.path.join(log_dir,f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_{log_name}.log")
     file_handler = logging.FileHandler(log_file)
     file_handler.setFormatter(formatter)
 

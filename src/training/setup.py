@@ -7,11 +7,11 @@ from src.models.caption_model import ImageCaptioningModel
 from tensorflow import keras
 import tensorflow as tf
 
-def build_caption_model(vocab_size, seq_length, embed_dim=512, ff_dim=512, num_heads=6,):
+def build_caption_model(vocab_size, seq_length, embed_dim=512, ff_dim=512, num_heads=6, image_size=(299, 299)):
     """
     Build and return the image captioning model.
     """
-    cnn_model = get_cnn_model()
+    cnn_model = get_cnn_model(image_size)
 
     encoder = TransformerEncoderBlock(embed_dim=embed_dim, dense_dim=ff_dim, num_heads=num_heads)
 
@@ -44,7 +44,6 @@ class WarmupLearningRateSchedule(keras.optimizers.schedules.LearningRateSchedule
             "base_lr": self.base_lr,
             "warmup_steps": self.warmup_steps,
         }
-
 
 
 def build_optimizer(train_dataset, epochs: int, base_lr: float = 1e-4, warmup_ratio: int = 15):

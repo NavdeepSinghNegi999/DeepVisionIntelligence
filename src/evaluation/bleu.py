@@ -8,7 +8,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from nltk.translate.bleu_score import sentence_bleu, SmoothingFunction
 
 
-def calculate_bleu(model, tokenizer, image_caption_map, img_dir, seq_len):
+def calculate_bleu(model, tokenizer, image_caption_map, img_dir, seq_len, image_size):
     """
     Compute BLEU-1 to BLEU-4 scores.
     """
@@ -18,7 +18,7 @@ def calculate_bleu(model, tokenizer, image_caption_map, img_dir, seq_len):
     for image_id in tqdm(image_caption_map.keys(), desc="Calculating BLEU Scores", unit="image"):
         image_path = os.path.join(img_dir, image_id)
 
-        predicted_caption = generate_caption(image_path, model, tokenizer, seq_len, False).strip()
+        predicted_caption = generate_caption(image_path, model, tokenizer, seq_len, image_size, False).strip()
         predicted_caption = predicted_caption.split()
 
         reference_captions = [caption.split() for caption in image_caption_map[image_id]]

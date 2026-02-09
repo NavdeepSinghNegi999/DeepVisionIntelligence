@@ -1,7 +1,6 @@
 # src/evaluation/utils.py
 from collections import defaultdict
 
-
 def build_image_caption_map(all_df, subset_df):
     """
     Map image_id -> list of ground truth captions.
