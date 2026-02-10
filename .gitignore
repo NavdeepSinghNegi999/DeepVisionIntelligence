@@ -6,6 +6,7 @@ artifacts/
 logs/
 runs/
 checkpoints/
+mlruns/
 
 # ======================
 # Python

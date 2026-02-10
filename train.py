@@ -1,6 +1,10 @@
 import os
 import yaml
 import pandas as pd
+import tensorflow as tf
+
+import mlflow
+import mlflow.tensorflow
 
 from src.data.preprocessing import preprocess_caption
 from src.data.dataset_split import dataset_split
@@ -25,6 +29,12 @@ def main():
 
     logger = setup_logger(log_name="training")
     logger.info("Starting training pipeline")
+
+    # =========================
+    # MLFLOW SETUP
+    # =========================
+    mlflow.set_tracking_uri("file:./mlruns")
+    mlflow.set_experiment("DeepVisionIntelligence")
 
     # =========================
     # LOAD CONFIG
@@ -115,53 +125,89 @@ def main():
     logger.info("Model compiled successfully")
 
     # =========================
-    # 6. TRAIN
+    # MLFLOW RUN
     # =========================
-    logger.info("Starting model training")
-    history = model.fit(train_ds, validation_data=val_ds, epochs=EPOCHS)
-    logger.info("Model training completed")
+    with mlflow.start_run(run_name=f"epochs={EPOCHS}_bs={BATCH_SIZE}"):
 
-    # =========================
-    # 7. SAVE ARTIFACTS
-    # =========================
-    logger.info("Saving training artifacts")
-    config_train = {
-        "IMAGE_SIZE": IMAGE_SIZE,
-        "SEQ_LENGTH": SEQ_LENGTH,
-        "EMBED_DIM": EMBED_DIM,
-        "NUM_HEADS": NUM_HEADS,
-        "FF_DIM": FF_DIM,
-        "BATCH_SIZE": BATCH_SIZE,
-        "EPOCHS": EPOCHS,
-        "VOCAB_SIZE": VOCAB_SIZE,
-    }
+        # -------------------------
+        # LOG PARAMETERS
+        # -------------------------
+        mlflow.log_params({
+            "epochs": EPOCHS,
+            "batch_size": BATCH_SIZE,
+            "embed_dim": EMBED_DIM,
+            "ff_dim": FF_DIM,
+            "num_heads": NUM_HEADS,
+            "vocab_size": VOCAB_SIZE,
+            "seq_length": SEQ_LENGTH,
+            "image_size": str(IMAGE_SIZE),
+            "max_samples": MAX_SAMPLES
+        })
 
-    save_training_artifacts(model=model, history=history, config=config_train, save_dir=ARTIFACTS_DIR, weights_path=WEIGHTS_PATH)
-    save_tokenizer(vectorizer, ARTIFACTS_DIR)
-    save_splits(df, train_df, val_df, test_df, PROCESSED_DIR)
+        # =========================
+        # 6. TRAIN
+        # =========================
+        logger.info("Starting model training")
+        history = model.fit(train_ds, validation_data=val_ds, epochs=EPOCHS)
+        logger.info("Model training completed")
+
+        # -------------------------
+        # LOG TRAIN METRICS
+        # -------------------------
+        for epoch in range(EPOCHS):
+            mlflow.log_metric("train_loss", history.history["loss"][epoch], step=epoch)
+            mlflow.log_metric("val_loss", history.history["val_loss"][epoch], step=epoch)
+
+        # =========================
+        # 7. SAVE ARTIFACTS
+        # =========================
+        logger.info("Saving training artifacts")
+        config_train = {
+            "IMAGE_SIZE": IMAGE_SIZE,
+            "SEQ_LENGTH": SEQ_LENGTH,
+            "EMBED_DIM": EMBED_DIM,
+            "NUM_HEADS": NUM_HEADS,
+            "FF_DIM": FF_DIM,
+            "BATCH_SIZE": BATCH_SIZE,
+            "EPOCHS": EPOCHS,
+            "VOCAB_SIZE": VOCAB_SIZE,
+        }
+
+        save_training_artifacts(model=model, history=history, config=config_train, save_dir=ARTIFACTS_DIR, weights_path=WEIGHTS_PATH)
+        save_tokenizer(vectorizer, ARTIFACTS_DIR)
+        save_splits(df, train_df, val_df, test_df, PROCESSED_DIR)
     
-    logger.info("Training pipeline completed successfully")
-    print("Training completed successfully")
+        mlflow.log_artifacts(ARTIFACTS_DIR)
+
+        logger.info("Training pipeline completed successfully")
+        print("Training completed successfully")
+        
 
 
-    # =========================
-    # 8. EVALUATION (BLEU)
-    # =========================
-    logger.info("Starting model evaluation (BLEU scores)")
-    
-    image_caption_map = build_image_caption_map(df, test_df)
+        # =========================
+        # 8. EVALUATION (BLEU)
+        # =========================
+        logger.info("Starting model evaluation (BLEU scores)")
+        
+        image_caption_map = build_image_caption_map(df, test_df)
 
-    bleu_scores = calculate_bleu(model=model, tokenizer=vectorizer, image_caption_map=image_caption_map, img_dir=IMG_DIR,seq_len=SEQ_LENGTH, image_size=IMAGE_SIZE)
+        bleu_scores = calculate_bleu(model=model, tokenizer=vectorizer, image_caption_map=image_caption_map, img_dir=IMG_DIR,seq_len=SEQ_LENGTH, image_size=IMAGE_SIZE)
 
-    logger.info(
-        f"BLEU scores | "
-        f"BLEU-1={bleu_scores[0]:.4f}, "
-        f"BLEU-2={bleu_scores[1]:.4f}, "
-        f"BLEU-3={bleu_scores[2]:.4f}, "
-        f"BLEU-4={bleu_scores[3]:.4f}"
-    )
+        logger.info(
+            f"BLEU scores | "
+            f"BLEU-1={bleu_scores[0]:.4f}, "
+            f"BLEU-2={bleu_scores[1]:.4f}, "
+            f"BLEU-3={bleu_scores[2]:.4f}, "
+            f"BLEU-4={bleu_scores[3]:.4f}"
+        )
+        mlflow.log_metrics({
+            "bleu_1": bleu_scores[0],
+            "bleu_2": bleu_scores[1],
+            "bleu_3": bleu_scores[2],
+            "bleu_4": bleu_scores[3],
+        })
 
-    print("BLEU Scores:", bleu_scores)
+        print("BLEU Scores:", bleu_scores)
     logger.info("Training pipeline completed successfully...")
 
 

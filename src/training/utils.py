@@ -11,16 +11,30 @@ def save_training_artifacts(model, history, config, save_dir, weights_path):
     """
     os.makedirs(save_dir, exist_ok=True)
 
-    # Save history
+    # -------------------------
+    # 1. Save training history
+    # -------------------------
     with open(os.path.join(save_dir, "history.json"), "w") as f:
         json.dump(history.history, f)
 
-    # Save model weights
-    model.save_weights(weights_path)
-
-    # Save training config
+    # -------------------------
+    # 2. Save training config
+    # -------------------------
     with open(os.path.join(save_dir, "config_train.json"), "w") as f:
         json.dump(config, f, indent=4)
+
+    # -------------------------
+    # 3. Save weights only
+    # -------------------------
+    model.save_weights(weights_path)
+
+    # -------------------------
+    # 4. Save full model (SavedModel) ✅ recommended
+    # -------------------------
+    # saved_model_dir = os.path.join(save_dir, "saved_model")
+    # model.save(saved_model_dir, include_optimizer=False, save_format="tf")
+
+ 
 
 
 def plot_history(history):
