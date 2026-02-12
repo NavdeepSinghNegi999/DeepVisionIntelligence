@@ -3,8 +3,9 @@ import yaml
 
 from src.inference.load_model import load_inference_model
 from src.inference.generate import generate_caption
-from src.data.tokenizer_utils import load_tokenizer
+from src.data_component.tokenizer_utils import load_tokenizer
 from src.utils.logging_utils import setup_logger
+
 
 
 def main():
@@ -17,7 +18,7 @@ def main():
 
     # =========================
     # LOAD CONFIG
-    # =========================
+    # ========================= 
     logger.info("Loading configuration file")
 
     with open(os.path.join(ROOT_DIR, "config.yaml"), "r") as f:
@@ -76,7 +77,6 @@ def main():
     print("-" * 30)
     print(caption)
     print("-" * 30)
-
 
 if __name__ == "__main__":
     main()

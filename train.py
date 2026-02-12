@@ -6,12 +6,12 @@ import tensorflow as tf
 import mlflow
 import mlflow.tensorflow
 
-from src.data.preprocessing import preprocess_caption
-from src.data.dataset_split import dataset_split
-from src.data.vectorizer import build_text_vectorizer
-from src.data.dataset import make_dataset
-from src.data.save_splits import save_splits
-from src.data.tokenizer_utils import save_tokenizer
+from src.data_component.preprocessing import preprocess_caption
+from src.data_component.dataset_split import dataset_split
+from src.data_component.vectorizer import build_text_vectorizer
+from src.data_component.dataset import make_dataset
+from src.data_component.save_splits import save_splits
+from src.data_component.tokenizer_utils import save_tokenizer
 
 from src.training.setup import (build_caption_model,build_optimizer, get_loss)
 from src.training.utils import save_training_artifacts

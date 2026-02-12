@@ -5,7 +5,6 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 from src.inference.image_utils import read_image_inf
 
-
 def generate_caption(image_path: str, caption_model, tokenizer, seq_length: int, image_size, show_image: bool = False) -> str:
     """
     Generate a caption for a given image using a trained captioning model.

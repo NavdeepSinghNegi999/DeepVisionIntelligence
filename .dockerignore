@@ -1,0 +1,12 @@
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.dvc
+mlruns
+logs
+notebooks
+tests
+.git
+
+

@@ -29,6 +29,11 @@ def save_training_artifacts(model, history, config, save_dir, weights_path):
     model.save_weights(weights_path)
 
     # -------------------------
+    # Saves full model
+    # -------------------------
+    # model.save("transformer_model")
+
+    # -------------------------
     # 4. Save full model (SavedModel) ✅ recommended
     # -------------------------
     # saved_model_dir = os.path.join(save_dir, "saved_model")

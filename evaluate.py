@@ -5,7 +5,7 @@ import pandas as pd
 from src.evaluation.utils import build_image_caption_map
 from src.evaluation.bleu import calculate_bleu
 from src.inference.load_model import load_inference_model
-from src.data.tokenizer_utils import load_tokenizer
+from src.data_component.tokenizer_utils import load_tokenizer
 from src.utils.logging_utils import setup_logger
 
 

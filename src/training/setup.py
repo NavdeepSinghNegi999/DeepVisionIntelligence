@@ -1,11 +1,12 @@
 # src/train/setup.py
  
-from src.data.augmentation import get_image_augmentation
+from src.data_component.augmentation import get_image_augmentation
 from src.models.cnn import get_cnn_model
 from src.models.transformer import (TransformerEncoderBlock, TransformerDecoderBlock)
 from src.models.caption_model import ImageCaptioningModel
 from tensorflow import keras
 import tensorflow as tf
+
 
 def build_caption_model(vocab_size, seq_length, embed_dim=512, ff_dim=512, num_heads=6, image_size=(299, 299)):
     """
@@ -66,9 +67,6 @@ def build_optimizer(train_dataset, epochs: int, base_lr: float = 1e-4, warmup_ra
 
     return keras.optimizers.Adam(learning_rate=lr_schedule)
 
-
-
-from tensorflow import keras
 
 
 def get_loss():

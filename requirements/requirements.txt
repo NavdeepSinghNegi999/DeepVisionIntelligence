@@ -10,3 +10,7 @@ seaborn==0.13.2
 pandas==2.2.2 
 nltk==3.9.1
 contractions==0.1.73
+fastapi==0.128.7
+uvicorn==0.40.0
+PyYAML==6.0.3
+python-multipart==0.0.22
