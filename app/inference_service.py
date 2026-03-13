@@ -11,7 +11,7 @@ from src.data_component.tokenizer_utils import load_tokenizer
 
 
 # =========================
-# LOAD EVERYTHING ONLY ONCE (Important for FastAPI)
+# LOAD EVERYTHING ONLY ONCE
 # =========================
 
 with open(os.path.join(ROOT_DIR, "config.yaml"), "r") as f:
@@ -29,7 +29,7 @@ model, model_config = load_inference_model(config_path=CONFIG_PATH, weights_path
 tokenizer = load_tokenizer(ARTIFACTS_DIR)
 
 # =========================
-# FUNCTION YOU NEED
+# Generate Image Caption
 # =========================
 def generate_image_caption(image_path: str) -> str:
     """

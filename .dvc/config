@@ -1,0 +1,6 @@
+[core]
+    remote = gcsremote
+['remote "local"']
+    url = .
+['remote "gcsremote"']
+    url = gs://image-caption

@@ -20,6 +20,7 @@ from src.utils.logging_utils import setup_logger
 
 from src.evaluation.utils import build_image_caption_map
 from src.evaluation.bleu import calculate_bleu
+from tensorflow.keras.callbacks import ModelCheckpoint, CSVLogger
 
 def main():
     # =========================
@@ -53,8 +54,12 @@ def main():
     ARTIFACTS_DIR = os.path.join(ROOT_DIR, CONFIG["paths"]["artifacts"])
     WEIGHTS_PATH = os.path.join(ROOT_DIR, CONFIG["paths"]["weights"])
     PROCESSED_DIR = os.path.join(ROOT_DIR, CONFIG["paths"]["processed"])
+    CHECKPOINT_PATH = os.path.join(ROOT_DIR, CONFIG["paths"]["artifacts"], "checkpoints")
+    LOG_CSV_PATH = os.path.join(ARTIFACTS_DIR, "training_log.csv")
+    checkpoint_file = os.path.join(CHECKPOINT_PATH,"best_model.h5")
     
     logger.info("Resolved project paths")
+    os.makedirs(CHECKPOINT_PATH, exist_ok=True)
 
     # =========================
     # DATA CONFIG
@@ -82,7 +87,7 @@ def main():
     # =========================
     df = pd.read_csv(CAPTION_PATH)
     df["caption"] = df["caption"].apply(preprocess_caption)
-    df = df.head(MAX_SAMPLES)                        # remove when testing complete.
+    # df = df.head(MAX_SAMPLES)                        # Sample of data.
     
     logger.info(f"Dataset loaded with {len(df)} samples")
 
@@ -91,9 +96,9 @@ def main():
     # =========================
     logger.info("Splitting dataset into train/val/test")
 
-    train_df, val_df, test_df = dataset_split(df)
+    train_df, test_df = dataset_split(df)
 
-    logger.info(f"Split sizes | train={len(train_df)}, val={len(val_df)}, test={len(test_df)}")
+    logger.info(f"Split sizes | train={len(train_df)}, test={len(test_df)}")
 
     # =========================
     # 3. TEXT VECTORIZATION
@@ -110,7 +115,6 @@ def main():
     # =========================
     logger.info("Creating TensorFlow datasets")
     train_ds = make_dataset(train_df, IMG_DIR, vectorizer, IMAGE_SIZE, BATCH_SIZE)
-    val_ds = make_dataset(val_df, IMG_DIR, vectorizer, IMAGE_SIZE, BATCH_SIZE, shuffle=False)
 
     # =========================
     # 5. MODEL
@@ -148,7 +152,9 @@ def main():
         # 6. TRAIN
         # =========================
         logger.info("Starting model training")
-        history = model.fit(train_ds, validation_data=val_ds, epochs=EPOCHS)
+        checkpoint = ModelCheckpoint(filepath=checkpoint_file, monitor="loss", save_best_only=True, save_weights_only=True, mode="min")
+        csv_logger = CSVLogger(LOG_CSV_PATH, append=True)
+        history = model.fit(train_ds, epochs=EPOCHS, callbacks=[checkpoint, csv_logger])
         logger.info("Model training completed")
 
         # -------------------------
@@ -156,7 +162,6 @@ def main():
         # -------------------------
         for epoch in range(EPOCHS):
             mlflow.log_metric("train_loss", history.history["loss"][epoch], step=epoch)
-            mlflow.log_metric("val_loss", history.history["val_loss"][epoch], step=epoch)
 
         # =========================
         # 7. SAVE ARTIFACTS
@@ -175,7 +180,7 @@ def main():
 
         save_training_artifacts(model=model, history=history, config=config_train, save_dir=ARTIFACTS_DIR, weights_path=WEIGHTS_PATH)
         save_tokenizer(vectorizer, ARTIFACTS_DIR)
-        save_splits(df, train_df, val_df, test_df, PROCESSED_DIR)
+        save_splits(df, train_df, test_df, PROCESSED_DIR)
     
         mlflow.log_artifacts(ARTIFACTS_DIR)
 
@@ -206,6 +211,8 @@ def main():
             "bleu_3": bleu_scores[2],
             "bleu_4": bleu_scores[3],
         })
+        bleu_df = pd.DataFrame({"BLEU-1": [bleu_scores[0]], "BLEU-2": [bleu_scores[1]], "BLEU-3": [bleu_scores[2]], "BLEU-4": [bleu_scores[3]]})
+        bleu_df.to_csv(os.path.join(ARTIFACTS_DIR, "bleu_scores.csv"), index=False)
 
         print("BLEU Scores:", bleu_scores)
     logger.info("Training pipeline completed successfully...")

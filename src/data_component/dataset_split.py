@@ -14,8 +14,8 @@ def dataset_split(df, dataset_len=40000, min_token=5, max_token=25, shuffle=True
 
     df = df[df["caption"].apply(lambda cap: min_token <= len(cap.split()) <= max_token)].iloc[:dataset_len]
 
-    train_df, temp_df = train_test_split(df, test_size=0.2, random_state=seed)
+    train_df, test_df = train_test_split(df, test_size=0.25, random_state=seed)
 
-    val_df, test_df = train_test_split(temp_df, test_size=0.5, random_state=seed)
+    # val_df, test_df = train_test_split(temp_df, test_size=0.5, random_state=seed)
 
-    return (train_df.reset_index(drop=True),val_df.reset_index(drop=True),test_df.reset_index(drop=True),)
+    return (train_df.reset_index(drop=True),  test_df.reset_index(drop=True),)
