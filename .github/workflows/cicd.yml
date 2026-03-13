@@ -1,19 +1,17 @@
 name: Simple CI Pipeline
 
 on:
-push:
-branches:
-- main
+  push:
+    branches: ["main"]
 
 jobs:
-test-cicd:
-runs-on: ubuntu-latest
+  test-cicd:
+    runs-on: ubuntu-latest
 
-```
-steps:
-  - name: Checkout repository
-    uses: actions/checkout@v4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-  - name: Print Hello World
-    run: echo "Hello World! CI/CD is working 🚀"
-```
+      - name: Print Hello World
+        run: echo "Hello World! CI/CD is working 🚀"
+
