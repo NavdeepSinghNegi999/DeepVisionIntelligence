@@ -40,12 +40,12 @@ jobs:
         run: docker build -t us-central1-docker.pkg.dev/vertex-ai-demo-457907/ml-repo/deepvisionintelligence:latest . 
 
       - name: Push Docker Image 
-        run: docker push us-cental1-docker.pkg.dev/vertex-ai-demo-457907/ml-repo/deepvisionintelligence:latest
+        run: docker push us-central1-docker.pkg.dev/vertex-ai-demo-457907/ml-repo/deepvisionintelligence:latest
 
       - name: Deploy Docker Image to cloud-run
         run: |
           gcloud run deploy deepvisionintelligence\
-          --image us-cental1-docker.pkg.dev/vertex-ai-demo-457907/ml-repo/deepvisionintelligence:latest \
+          --image us-central1-docker.pkg.dev/vertex-ai-demo-457907/ml-repo/deepvisionintelligence:latest \
           --region us-central1 \
           --platform managed \
           --alow-unaauthenticated \
