@@ -21,7 +21,7 @@ HTML_TEMPLATE = """
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Image Caption Generator</title>
+    <title>DeepVision Intelligence</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
         body { background: #f5f7fa; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
@@ -41,7 +41,11 @@ HTML_TEMPLATE = """
 </head>
 <body>
     <div class="card">
-        <h2>Image Caption Generator</h2>
+        <h2>DeepVision Intelligence</h2>
+
+        <p style="text-align:center;color:#64748b;margin-bottom:25px;">
+        Discover the story hidden inside your images with AI
+        </p>
         
         <!-- Upload Form -->
         <div id="uploadForm">
@@ -50,7 +54,7 @@ HTML_TEMPLATE = """
                 <p style="color: #64748b; margin-bottom: 15px;">JPG, PNG, GIF (max 10MB)</p>
                 <form action="/upload/" method="post" enctype="multipart/form-data" id="form">
                     <input type="file" name="file" accept="image/*" required id="fileInput">
-                    <button type="submit">Generate Caption</button>
+                    <button type="submit">Unlock Image Insight</button>
                 </form>
             </div>
         </div>
@@ -79,7 +83,7 @@ HTML_TEMPLATE = """
                 const doc = parser.parseFromString(html, 'text/html');
                 
                 document.querySelector('.card').innerHTML = `
-                    <h2>Generated Caption</h2>
+                    <h2>AI Generated Insight</h2>
                     <img src="${doc.querySelector('img').src}" style="max-width:100%; border-radius:8px; margin:20px 0;">
                     <div class="caption">${doc.querySelector('p').textContent}</div>
                     <a href="/" onclick="window.location.reload()">← Upload Another</a>
