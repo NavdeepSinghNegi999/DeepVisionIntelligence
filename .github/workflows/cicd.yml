@@ -1,17 +1,65 @@
-name: Simple CI Pipeline
+name: DeepVisionIntelligence CI/CD Pipeline
 
 on:
   push:
     branches: ["main"]
 
 jobs:
-  test-cicd:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Print Hello World
-        run: echo "Hello World! CI/CD is working 🚀"
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10.0"
+
+      - name: Install DVC
+        run: pip install dvc-gs
+      
+      - name: Authenticate GCP
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_KEY }}
+
+      - name: DVC Pull
+        run: dvc pull
+
+      - name: Setup GCloud
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id = vertex-ai-demo-457907
+      
+      - name: Configure Docker
+        run: gcloud auth configure-docker us-central1-docker.pkg.dev
+
+      - name: Build Docker Image
+        runs: docker buil -t us-central-docker.pkg.dev/vertex-ai-demo-457907/ml-repo/deepvisionintelligence:latest . 
+
+      - name: Push Docker Image 
+        run: docker push us-cental1-docker.pkg.dev/vertex-ai-demo-457907/ml-repo/deepvisionintelligence:latest
+
+      - name: Deploy Docker Image to cloud-run
+        run: |
+          gcloud run deploy deepvisionintelligence\
+          --image us-cental1-docker.pkg.dev/vertex-ai-demo-457907/ml-repo/deepvisionintelligence:latest \
+          --region us-central1 \
+          --platform managed \
+          --alow-unaauthenticated \
+          --timeout=600 \
+          --memory=4Gi
+
+
+  # test-cicd:
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
+
+  #     - name: Print Hello World
+  #       run: echo "Hello World! CI/CD is working 🚀"
 
