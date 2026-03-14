@@ -4,7 +4,7 @@
 
 **DeepVisionIntelligence** is an image captioning model that looks at pictures and tells you what's in them - like having a second pair of eyes. Trained on **8,000+** high-resolution images, it uses a **Transformer architecture** (the same tech behind modern language models(***LLM***)) to generate natural, accurate descriptions. From "a brown dog chasing a frisbee in the park" to "a plate of pasta with basil leaves on a wooden table" - it picks out the details, finds the right words, and turns them into proper, contextually accurate sentences.. 
 
-**It's built end-to-end** – from training the model to deploying it live. The pipeline covers **data versioning**, **experiment tracking**, **model training**, and **automated deployment** using **MLOps practices** and **CI/CD**. Every code change triggers automated tests, and the latest model gets deployed seamlessly. So you're not just getting a model – you're getting a **production-ready system** that's always up-to-date.
+**It's built end-to-end** – from training the model to deploying it live. The pipeline covers **data versioning**, **experiment tracking**, **model training**, and **automated deployment** using **MLOps practices** and **CI/CD**. Every code change triggers automated task, and the latest model gets deployed seamlessly. So you're not just getting a model – you're getting a **production-ready system** that's always up-to-date.
 
 
 ### ✨ Key Features
@@ -22,7 +22,7 @@
 
 | Front Page | Generated Caption |
 |:---:|:---:|
-| ![Upload](test/screenshots/upload.png) | ![Result](test/screenshots/result.png) |
+| ![Upload](test/screenshots/1_results.png) | ![Result](test/screenshots/2_front_page.png) |
 
 ---
 
@@ -231,7 +231,7 @@ Contributions are welcome! Here's how you can help:
 
 <div align="center">
   
-**Made with ❤️ by Navdeep**
+**Made by Navdeep**
 
 [⬆ Back to Top](#deepvisionintelligence-)
 
