@@ -48,7 +48,7 @@ jobs:
           --image us-central1-docker.pkg.dev/vertex-ai-demo-457907/ml-repo/deepvisionintelligence:latest \
           --region us-central1 \
           --platform managed \
-          --alow-unaauthenticated \
+          --allow-unauthenticated \
           --timeout=600 \
           --memory=4Gi
 
