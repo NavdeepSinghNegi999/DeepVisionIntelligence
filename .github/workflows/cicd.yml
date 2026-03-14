@@ -44,7 +44,7 @@ jobs:
 
       - name: Deploy Docker Image to cloud-run
         run: |
-          gcloud run deploy deepvisionintelligence\
+          gcloud run deploy deepvisionintelligence \
           --image us-central1-docker.pkg.dev/vertex-ai-demo-457907/ml-repo/deepvisionintelligence:latest \
           --region us-central1 \
           --platform managed \
