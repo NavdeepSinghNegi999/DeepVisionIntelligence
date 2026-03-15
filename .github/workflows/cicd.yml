@@ -12,43 +12,43 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-#       - name: Setup Python
-#         uses: actions/setup-python@v4
-#         with:
-#           python-version: "3.10"
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
 
-#       - name: Install DVC
-#         run: pip install dvc-gs
+      - name: Install DVC
+        run: pip install dvc-gs
       
-#       - name: Authenticate GCP
-#         uses: google-github-actions/auth@v1
-#         with:
-#           credentials_json: ${{ secrets.GCP_KEY }}
+      - name: Authenticate GCP
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_KEY }}
 
-#       - name: DVC Pull
-#         run: dvc pull
+      - name: DVC Pull
+        run: dvc pull
 
-#       - name: Setup GCloud
-#         uses: google-github-actions/setup-gcloud@v1
-#         with:
-#           project_id: vertex-ai-demo-457907
+      - name: Setup GCloud
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: vertex-ai-demo-457907
       
-#       - name: Configure Docker
-#         run: gcloud auth configure-docker us-central1-docker.pkg.dev
+      - name: Configure Docker
+        run: gcloud auth configure-docker us-central1-docker.pkg.dev
 
-#       - name: Build Docker Image
-#         run: docker build -t us-central1-docker.pkg.dev/vertex-ai-demo-457907/ml-repo/deepvisionintelligence:latest . 
+      - name: Build Docker Image
+        run: docker build -t us-central1-docker.pkg.dev/vertex-ai-demo-457907/ml-repo/deepvisionintelligence:latest . 
 
-#       - name: Push Docker Image 
-#         run: docker push us-central1-docker.pkg.dev/vertex-ai-demo-457907/ml-repo/deepvisionintelligence:latest
+      - name: Push Docker Image 
+        run: docker push us-central1-docker.pkg.dev/vertex-ai-demo-457907/ml-repo/deepvisionintelligence:latest
 
-#       - name: Deploy Docker Image to cloud-run
-#         run: |
-#           gcloud run deploy deepvisionintelligence \
-#           --image us-central1-docker.pkg.dev/vertex-ai-demo-457907/ml-repo/deepvisionintelligence:latest \
-#           --region us-central1 \
-#           --platform managed \
-#           --allow-unauthenticated \
-#           --timeout=600 \
-#           --memory=4Gi
+      - name: Deploy Docker Image to cloud-run
+        run: |
+          gcloud run deploy deepvisionintelligence \
+          --image us-central1-docker.pkg.dev/vertex-ai-demo-457907/ml-repo/deepvisionintelligence:latest \
+          --region us-central1 \
+          --platform managed \
+          --allow-unauthenticated \
+          --timeout=600 \
+          --memory=4Gi
 

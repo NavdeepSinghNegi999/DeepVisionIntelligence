@@ -20,10 +20,6 @@
 
 ## 🚀 Demo
 
-<!-- | Front Webpage | AI Caption Result |
-|:---:|:---:|
-| ![Upload](tests/screenshots/5_deploy_webapp.png) | ![Result](tests/screenshots/6_deploy_webpage_result.png) | -->
-
 | |
 |:---:|
 | **Front Webpage** |
