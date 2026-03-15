@@ -20,9 +20,16 @@
 
 ## 🚀 Demo
 
-| Front Page | Generated Caption |
+<!-- | Front Webpage | AI Caption Result |
 |:---:|:---:|
-| ![Upload](tests/screenshots/5_deploy_webapp.png) | ![Result](tests/screenshots/1_results.png) |
+| ![Upload](tests/screenshots/5_deploy_webapp.png) | ![Result](tests/screenshots/6_deploy_webpage_result.png) | -->
+
+| |
+|:---:|
+| **Front Webpage** |
+| ![Upload](tests/screenshots/5_deploy_webapp.png) |
+| **AI Caption Result** |
+| ![Result](tests/screenshots/6_deploy_webpage_result.png) |
 
 ---
 
