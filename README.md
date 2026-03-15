@@ -22,7 +22,7 @@
 
 | Front Page | Generated Caption |
 |:---:|:---:|
-| ![Upload](test/screenshots/1_results.png) | ![Result](test/screenshots/2_front_page.png) |
+| ![Upload](tests/screenshots/5_deploy_webapp.png) | ![Result](tests/screenshots/1_results.png) |
 
 ---
 
