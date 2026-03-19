@@ -11,7 +11,7 @@ Trained on **8,000+ images**, the model leverages **transfer learning, attention
 Beyond model development, the system is deployed as a **real-time application** using FastAPI and Google Cloud. An end-to-end **MLOps pipeline** is integrated for experiment tracking, data versioning, and automated deployment via CI/CD, ensuring the model is scalable, reproducible, and production-ready.
 
 ---
-### ✨ Key Features
+## ✨ Key Features
 
 - 🤖 **AI-Powered Caption Generation** - Transformer-based model generates context-aware descriptions  
 - 🧠 **Deep Learning Architecture** - CNN (EfficientNet) + Transformer for vision-language learning  
@@ -21,6 +21,8 @@ Beyond model development, the system is deployed as a **real-time application** 
 - 🔁 **CI/CD Pipeline** - Automated build and deployment using GitHub Actions  
 - 📊 **Experiment Tracking & Versioning** - DVC and MLflow for reproducibility  
 - ☁️ **Cloud Integration** - Google Cloud for scalable storage and deployment  
+
+---
 
 ## 🧠 Deep Learning Highlights
 
@@ -32,7 +34,9 @@ Beyond model development, the system is deployed as a **real-time application** 
 - Trained using Sparse Categorical Crossentropy loss and optimized with Adam  
 - Evaluated using BLEU score metrics  
 
-### 🔍 Model Details
+
+
+## 🔍 Model Details
 
 - **Encoder**:
   - Pretrained EfficientNetB0 extracts high-level visual features from images
