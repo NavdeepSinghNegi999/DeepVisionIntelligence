@@ -2,19 +2,70 @@
 
 ## 🌟 Overview
 
-**DeepVisionIntelligence** is an image captioning model that looks at pictures and tells you what's in them - like having a second pair of eyes. Trained on **8,000+** high-resolution images, it uses a **Transformer architecture** (the same tech behind modern language models(***LLM***)) to generate natural, accurate descriptions. From "a brown dog chasing a frisbee in the park" to "a plate of pasta with basil leaves on a wooden table" - it picks out the details, finds the right words, and turns them into proper, contextually accurate sentences.. 
+**DeepVisionIntelligence** is a **Transformer-based image captioning system** that generates natural language descriptions from images.
 
-**It's built end-to-end** – from training the model to deploying it live. The pipeline covers **data versioning**, **experiment tracking**, **model training**, and **automated deployment** using **MLOps practices** and **CI/CD**. Every code change triggers automated task, and the latest model gets deployed seamlessly. So you're not just getting a model – you're getting a **production-ready system** that's always up-to-date.
+The model combines **CNN-based visual feature extraction (EfficientNetB0)** with a **Transformer decoder** to learn rich multimodal representations. It performs **sequence modeling** to generate captions word-by-word, conditioned on image features, producing contextually accurate descriptions such as “a dog playing in the park” or “a plate of pasta on a wooden table”.
 
+Trained on **8,000+ images**, the model leverages **transfer learning, attention mechanisms, and token-level prediction** to understand visual context and convert it into fluent text.
 
+Beyond model development, the system is deployed as a **real-time application** using FastAPI and Google Cloud. An end-to-end **MLOps pipeline** is integrated for experiment tracking, data versioning, and automated deployment via CI/CD, ensuring the model is scalable, reproducible, and production-ready.
+
+---
 ### ✨ Key Features
 
-- 🖼️ **Image Upload** - click button to upload image
-- 📊 **Model Versioning** - Track experiments with DVC
-- ⚡ **Real-time Processing** - Fast inference with TensorFlow
-- 🤖 **AI-Powered Captions** - Generates context-aware descriptions
-- ⚙️ **End-to-End MLOps Pipeline** - Fully end-to-end project with **MLOps** and **CI/CD**
-- ☁️ **Cloud Ready** - Used Google Cloud Platform (GCP) for DVC storage and cloud deployment
+- 🤖 **AI-Powered Caption Generation** - Transformer-based model generates context-aware descriptions  
+- 🧠 **Deep Learning Architecture** - CNN (EfficientNet) + Transformer for vision-language learning  
+- ⚡ **Real-time Inference** - Fast caption generation using TensorFlow  
+- 🖼️ **Image Upload Interface** - Simple UI for testing model predictions  
+- ⚙️ **Production-ready Deployment** - FastAPI + Docker + Cloud Run  
+- 🔁 **CI/CD Pipeline** - Automated build and deployment using GitHub Actions  
+- 📊 **Experiment Tracking & Versioning** - DVC and MLflow for reproducibility  
+- ☁️ **Cloud Integration** - Google Cloud for scalable storage and deployment  
+
+## 🧠 Deep Learning Highlights
+
+- Transformer-based sequence generation for image captioning  
+- Multi-modal learning (vision + language fusion)  
+- Pretrained CNN (EfficientNet) for feature extraction  
+- Attention mechanism for context-aware caption generation  
+- Tokenization and sequence modeling for NLP  
+- Trained using Sparse Categorical Crossentropy loss and optimized with Adam  
+- Evaluated using BLEU score metrics  
+
+### 🔍 Model Details
+
+- **Encoder**:
+  - Pretrained EfficientNetB0 extracts high-level visual features from images
+  - Transfer learning is used to leverage ImageNet representations
+  - Extracted features are projected into the embedding space for the Transformer
+
+- **Decoder**:
+  - Transformer-based decoder with multi-head self-attention
+  - Learns contextual relationships between words using sequence modeling
+  - Generates captions token-by-token conditioned on image features
+
+- **Training**:
+  - Loss Function: Sparse Categorical Crossentropy (token-level prediction)
+  - Padding tokens are masked during loss computation (`reduction="none"`)
+  - Optimizer: Adam with learning rate warmup schedule
+  - Captions are tokenized, indexed, and padded to fixed sequence length
+
+- **Inference**:
+  - Given an image, the encoder extracts feature embeddings
+  - The decoder generates captions sequentially using previous tokens as context
+  - At each step, the next word is selected based on predicted probability distribution
+
+---
+
+## 🚀 Deployment & Production
+
+- Deployed using FastAPI for real-time inference  
+- Containerized using Docker for reproducibility  
+- Integrated with Google Cloud Run for scalable deployment  
+- CI/CD pipeline using GitHub Actions for automated builds and deployment  
+- DVC and MLflow used for experiment tracking and model versioning  
+
+This ensures the model is not just trained but also production-ready and scalable.
 
 ---
 
@@ -33,15 +84,14 @@
 
 | Component | Technology | Purpose |
 |-----------|------------|---------|
-| **AI/ML** | TensorFlow, Python, Transformer (Encoder-Decoder Architecture) | Core deep learning model for image captioning |
-| **MLOps** | DVC, Git, MLflow, Docker | Experiment tracking, data versioning, model registry |
-| **Cloud Platform** | Google Cloud Platform (GCP) | Cloud Run for deployment, Cloud Storage for DVC remote storage |
-| **CI/CD** | GitHub Actions | Containerization and automated deployment pipeline |
-| **Backend** | FastAPI | High-performance web framework |
-| **Frontend** | HTML/CSS/JS | Responsive user interface |
-| **Image Processing** | VGG16 | Image preprocessing and feature extraction |
-| **NLP** | NLTK | Natural language processing for caption generation |
-
+| **Deep Learning** | TensorFlow, Transformer (Encoder-Decoder), EfficientNetB0 | Image captioning using vision-language modeling and attention |
+| **Sequence Modeling / NLP** | Tokenization, Text Processing, NLTK | Caption generation and sequence handling |
+| **Model Training** | Adam Optimizer, Learning Rate Warmup, Sparse Categorical Crossentropy | Training and optimization of sequence prediction model |
+| **MLOps** | DVC, MLflow, Docker, Git | Experiment tracking, data versioning, reproducibility |
+| **CI/CD** | GitHub Actions | Automated build and deployment pipeline |
+| **Backend** | FastAPI | Real-time model inference API |
+| **Frontend** | HTML, CSS, JavaScript | User interface for image upload and caption display |
+| **Cloud Platform** | Google Cloud Platform (GCP) | Cloud Run deployment and Cloud Storage for artifacts |
 
 
 ---
@@ -226,7 +276,7 @@ Contributions are welcome! Here's how you can help:
 
 ## 📧 Contact
 
-**Your Name** - Navdeep Singh
+**Name** - Navdeep Singh
 
 **LinkedIn ID** - https://www.linkedin.com/in/navdeep-singh-n/
 
@@ -234,11 +284,13 @@ Contributions are welcome! Here's how you can help:
 
 <div align="center">
   
-**Made by Navdeep**
+**Built by Navdeep Singh**
 
 [⬆ Back to Top](#deepvisionintelligence-)
 
 
 
 </div>
+
+
 
